@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+import { project } from "../data/project";
+---
+
+<BaseLayout title="Install Teral on Linux" description="Install Teral on Ubuntu, Debian, Arch, Omarchy and other x86_64 Linux distributions.">
+  <section class="page-hero page-width">
+    <p class="kicker"><span></span>Current release · {project.version}</p>
+    <h1>Install Teral.<br /><em>Keep it current.</em></h1>
+    <p>Choose the package for your system. All release downloads and checksums are published on GitHub.</p>
+    <a class="button primary" href={project.release}>Open latest release<span>↗</span></a>
+  </section>
+
+  <section class="install-options page-width">
+    <article><p class="section-label">Ubuntu / Debian</p><h2>Install the package.</h2><p>The Debian package lets APT resolve GTK and VTE dependencies automatically.</p><CodeBlock code={`sudo apt install ./teral_${project.version}_amd64.deb`} /></article>
+    <article><p class="section-label">Other x86_64 Linux</p><h2>Use the release archive.</h2><p>The portable archive expects GTK 4.12 or newer and VTE for GTK4 to already be installed.</p><CodeBlock code={`tar -xzf teral-${project.version}-x86_64-linux.tar.gz\ncd teral-${project.version}\nsudo ./scripts/install.sh`} /></article>
+    <article><p class="section-label">User-only install</p><h2>No root required.</h2><p>Install the release archive beneath <code>~/.local</code>. Ensure <code>~/.local/bin</code> is on your PATH.</p><CodeBlock code={'PREFIX="$HOME/.local" ./scripts/install.sh'} /></article>
+    <article><p class="section-label">Future releases</p><h2>Update in place.</h2><p>Close Teral first. The updater finds the latest release, verifies its checksum, installs it and removes temporary files.</p><CodeBlock code="teral-update" /></article>
+  </section>
+
+  <section class="source-install page-width section-grid">
+    <div><p class="section-label">Build from source</p><h2>Rust, GTK4 and VTE.</h2><p>Use the pinned Rust toolchain and locked dependency graph from the repository.</p></div>
+    <div><CodeBlock label="Arch / Omarchy dependencies" code="sudo pacman -S --needed base-devel gtk4 vte4 pkgconf" /><CodeBlock label="Build and run" code={`git clone ${project.repository}\ncd teral\ncargo run --release`} /><p class="muted">Optional PDF and media previews use <code>poppler</code> and <code>ffmpeg</code>. Teral remains usable without them.</p></div>
+  </section>
+
+  <section class="requirements page-width"><p class="section-label">System requirements</p><div><strong>Linux</strong><span>Local filesystem operations</span></div><div><strong>GTK 4.12+</strong><span>Native interface</span></div><div><strong>VTE for GTK4</strong><span>Quick Command terminal</span></div><div><strong>x86_64</strong><span>Current prebuilt releases</span></div></section>
+</BaseLayout>

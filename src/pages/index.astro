@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+import { project, shortcuts } from "../data/project";
+
+const features = [
+  ["Operations you can trust", "Copy, cut, move, duplicate, rename and link with conflict decisions, cancellable progress and no silent overwrites."],
+  ["Trash across filesystems", "FreeDesktop-compatible trash on your home filesystem and external drives, with restore to the original location."],
+  ["Quick Command", "A real VTE terminal and a command entry rooted in the folder you are browsing."],
+  ["Works with the desktop", "Shared clipboard and drag-and-drop interoperability with Nautilus, Dolphin, Thunar and other applications."],
+  ["Search without freezing", "Recursive Home search streams bounded batches while the current-folder filter stays immediate."],
+  ["Adaptive tiling layout", "Navigation and Details become overlay drawers when space is tight while Files and Quick Command stay underneath."],
+];
+---
+
+<BaseLayout title="Teral — Native files for modern Linux" description="Teral is a native Rust and GTK4 file manager built for Omarchy and modern Linux desktops.">
+  <section class="hero page-width">
+    <div class="hero-copy">
+      <p class="kicker"><span></span>Rust · GTK4 · Linux</p>
+      <h1>A file manager that <em>belongs</em> on your desktop.</h1>
+      <p class="hero-text">Teral brings navigation, files, details and a terminal into one focused workspace. It follows GTK everywhere and integrates directly with Omarchy themes.</p>
+      <div class="actions">
+        <a class="button primary" href={project.release}>Download {project.version}<span>↓</span></a>
+        <a class="button quiet" href={project.repository}>View source<span>↗</span></a>
+      </div>
+      <p class="early-note">Early public release. Keep another file manager installed while Teral matures.</p>
+    </div>
+    <div class="hero-facts" aria-label="Project facts">
+      <div><strong>Native</strong><span>No Electron or web view</span></div>
+      <div><strong>Adaptive</strong><span>Wide workspace, narrow drawers</span></div>
+      <div><strong>Theme-aware</strong><span>First-class Omarchy support</span></div>
+    </div>
+  </section>
+
+  <section class="product-frame page-width" aria-label="Teral running on Omarchy">
+    <div class="frame-bar"><span>Teral on Omarchy</span><span>v{project.version}</span></div>
+    <img src="/images/teral-omarchy-hero.png" alt="Teral in a dark purple and green Omarchy theme with navigation, files, details and Quick Command visible" width="1920" height="1013" />
+  </section>
+
+  <section class="intro page-width section-grid">
+    <div><p class="section-label">Why Teral</p><h2>Files are not a side feature.</h2></div>
+    <div><p class="large-copy">Moving, restoring and organizing data deserves more care than another generic window painted over the desktop.</p><p>Teral is designed around dependable operations, visible context and a layout that stays useful on both conventional desktops and tiling window managers.</p></div>
+  </section>
+
+  <section class="features page-width">
+    <div class="section-heading"><p class="section-label">Core capabilities</p><h2>The everyday work, properly handled.</h2></div>
+    <div class="feature-list">
+      {features.map(([title, text], index) => (
+        <article><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>
+      ))}
+    </div>
+  </section>
+
+  <section class="comparison-wrap">
+    <div class="comparison page-width">
+      <div class="section-heading compact"><p class="section-label">Same Omarchy theme</p><h2>A better fit.</h2><p>These are the same desktop and palette. Teral consumes semantic file-manager colors instead of stopping at a generic GTK surface.</p></div>
+      <div class="comparison-grid">
+        <figure class="preview-card preferred"><figcaption><strong>Teral</strong><span>Theme-aware three-pane workspace</span></figcaption><img src="/images/teral-omarchy-sand.png" alt="Teral integrated with the warm Omarchy theme" loading="lazy" width="1920" height="1013" /></figure>
+        <figure class="preview-card"><figcaption><strong>GNOME Files</strong><span>Reference on the same theme</span></figcaption><img src="/images/gnome-files-omarchy-sand.png" alt="GNOME Files on the same warm Omarchy theme" loading="lazy" width="1920" height="1013" /></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="themes-preview page-width">
+    <div class="section-heading compact"><p class="section-label">Omarchy themes</p><h2>Follow the system. Actually.</h2><p>Teral applies theme changes while it is running. A portable <code>files.toml</code> offers precise semantic colors, with safe fallback to <code>colors.toml</code>.</p><a class="inline-link" href="/themes/">Read the complete theme guide <span>→</span></a></div>
+    <div class="theme-images">
+      <figure class="preview-card"><img src="/images/teral-omarchy-blue.png" alt="Teral in a dark blue Omarchy theme" loading="lazy" width="1920" height="1013" /><figcaption><strong>Midnight blue</strong><span>Full desktop palette</span></figcaption></figure>
+      <figure class="preview-card"><img src="/images/teral-omarchy-green.png" alt="Teral in a dark green Omarchy theme" loading="lazy" width="1920" height="1013" /><figcaption><strong>Forest glass</strong><span>Full desktop palette</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="shortcuts page-width section-grid">
+    <div><p class="section-label">Keyboard-first</p><h2>Stay in motion.</h2><p>Press <kbd>F1</kbd> inside Teral to see the complete shortcut reference.</p></div>
+    <div class="shortcut-list">
+      {shortcuts.map(([keys, action]) => <div><kbd>{keys}</kbd><span>{action}</span></div>)}
+    </div>
+  </section>
+
+  <section class="install-callout page-width">
+    <div><p class="section-label">Install once</p><h2>Update with one command.</h2><p>Release packages from 0.1.1 onward include a checksum-verified updater.</p></div>
+    <div><CodeBlock code="teral-update" label="After the first installation" /><a class="button primary" href="/install/">Installation guide<span>→</span></a></div>
+  </section>
+</BaseLayout>

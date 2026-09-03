@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CodeBlock from "../components/CodeBlock.astro";
+
+const completeTheme = `version = 1
+name = "Amber Circuit"
+
+[colors]
+background = "#0d0d0f"
+surface = "#101014"
+surface_alt = "#19191f"
+elevated = "#202028"
+border = "#2d2b30"
+text = "#d9d4cb"
+text_bright = "#fff7e8"
+text_muted = "#858078"
+accent = "#e6a843"
+selection = "#352817"
+danger = "#df6653"
+warning = "#e6a843"
+success = "#7dbb7a"
+
+[layout]
+window_width = 1360
+window_height = 840
+sidebar_width = 238
+details_width = 316
+spacing = 12
+radius = 10
+row_height = 30
+grid_icon_size = 64`;
+
+const roles = [
+  ["background", "Window canvas"], ["surface", "Primary panels"],
+  ["surface_alt", "Contrasting regions"], ["elevated", "Menus and raised controls"],
+  ["border", "Dividers and outlines"], ["text", "Primary readable text"],
+  ["text_bright", "Strong labels and focus"], ["text_muted", "Secondary information"],
+  ["accent", "Active controls and identity"], ["selection", "Selected rows and tiles"],
+  ["danger", "Destructive actions"], ["warning", "Caution and attention"],
+  ["success", "Completed and healthy states"],
+];
+---
+
+<BaseLayout title="Teral theme support — files.toml" description="Complete documentation for the portable files.toml theme format supported by Teral on Omarchy.">
+  <section class="page-hero page-width">
+    <p class="kicker"><span></span>Theme format · version 1</p>
+    <h1>Theme your file manager with <em>files.toml</em>.</h1>
+    <p>Semantic colors that an Omarchy theme can define once and other file managers can choose to implement.</p>
+  </section>
+
+  <section class="docs page-width">
+    <aside><p class="section-label">How it works</p><nav aria-label="Theme guide"><a href="#location">Location</a><a href="#example">Complete example</a><a href="#roles">Color roles</a><a href="#layout">Layout ranges</a><a href="#fallback">Fallback behavior</a></nav></aside>
+    <div class="docs-content">
+      <section id="location"><p class="section-label">01 · Location</p><h2>Keep it with the Omarchy theme.</h2><p>Add <code>files.toml</code> beside the active theme's <code>colors.toml</code>. Teral watches the active theme and applies changes while running.</p><CodeBlock code="~/.config/omarchy/current/theme/files.toml" /></section>
+
+      <section id="example"><p class="section-label">02 · Complete example</p><h2>Start with the roles you need.</h2><p>Every color and layout key is optional. Declare <code>version = 1</code>, define the values the theme owns, and let Teral inherit the rest safely.</p><CodeBlock code={completeTheme} label="files.toml" /></section>
+
+      <section id="roles"><p class="section-label">03 · Portable color roles</p><h2>Meaning, not GTK internals.</h2><p>The color section is the portable core. The names describe interface purpose so another file manager can support the same contract.</p><div class="role-grid">{roles.map(([name, meaning]) => <div><code>{name}</code><span>{meaning}</span></div>)}</div></section>
+
+      <section id="layout"><p class="section-label">04 · Optional Teral layout</p><h2>Controlled, and safely bounded.</h2><p>The layout section is currently a Teral extension. Values outside these ranges are clamped rather than allowed to break the interface.</p><div class="range-grid"><div><code>window_width</code><span>720–3840 px</span></div><div><code>window_height</code><span>480–2160 px</span></div><div><code>sidebar_width</code><span>180–420 px</span></div><div><code>details_width</code><span>240–520 px</span></div><div><code>spacing</code><span>0–32 px</span></div><div><code>radius</code><span>0–24 px</span></div><div><code>row_height</code><span>22–64 px</span></div><div><code>grid_icon_size</code><span>32–160 px</span></div></div></section>
+
+      <section id="fallback"><p class="section-label">05 · Fallback behavior</p><h2>Partial themes remain usable.</h2><p>When <code>files.toml</code> is missing, Teral derives a palette from Omarchy's <code>colors.toml</code>. Missing or invalid individual values inherit from the safe built-in palette. Outside Omarchy, system mode follows GTK.</p><figure class="single-preview"><img src="/images/teral-omarchy-green.png" alt="Teral using a green Omarchy palette" loading="lazy" width="1920" height="1013" /><figcaption>The theme contract colors the workspace without replacing the desktop's icon theme.</figcaption></figure></section>
+    </div>
+  </section>
+</BaseLayout>

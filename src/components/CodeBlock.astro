@@ -1,0 +1,14 @@
+---
+interface Props {
+  code: string;
+  label?: string;
+}
+
+const { code, label } = Astro.props;
+---
+
+<div class="code-block">
+  {label && <span class="code-label">{label}</span>}
+  <button class="copy-code" type="button" data-copy={code} aria-label="Copy code">Copy</button>
+  <pre><code>{code}</code></pre>
+</div>
