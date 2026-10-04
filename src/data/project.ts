@@ -1,5 +1,5 @@
 export const project = {
-  version: "0.1.5",
+  version: "0.1.6",
   repository: "https://github.com/zuhaibullahbaig/teral",
   release: "https://github.com/zuhaibullahbaig/teral/releases/latest",
   issues: "https://github.com/zuhaibullahbaig/teral/issues",
